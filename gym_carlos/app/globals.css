@@ -1,0 +1,50 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  background-color: #ffffff;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.section_saludo{
+  background-color: #1e1e1e;
+}
+
+.imagen-perfil{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit:cover;
+}
+.descripcion_cards{
+  font-size: 0.6em !important;
+}
+.actividad{
+  background-color: #EBFFA9 !important;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 0px 5px rgba(30, 30, 30, 0.6);
+}
+.color{
+  color: #1a2e1a !important;
+}
+.flecha{
+  cursor: pointer;
+}
+/* ESTILOS PERFIL.TSX */
+@media (max-width: 768px) {
+.btn-perfil{
+  border:none !important;
+}
+.saludo_personalizado{
+  font-size: 1.2em;
+  color: #ffffff;
+}
+.imagen-perfil{
+  width: 50px !important;
+  height: 50px !important;
+}
+}
+
