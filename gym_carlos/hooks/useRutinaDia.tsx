@@ -11,6 +11,7 @@ export type Ejercicio = {
     peso: number;
     rpe: number;
     notas: string;
+    musculo: string;
 }
 
 export type Rutina = {
@@ -35,7 +36,7 @@ useEffect(() => {
         setLoading(true);
         const {data, error} = await supabase
             .from("rutinas")
-            .select("id, nombre, dia_semana, ejercicios (id, ejercicio, series, repeticiones, peso, rpe, notas)")
+            .select("id, nombre, dia_semana, ejercicios (id, ejercicio, series, repeticiones, peso, rpe, notas, musculo)")
             .eq("dia_semana", dia_semana)
             .maybeSingle();
 

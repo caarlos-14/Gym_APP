@@ -31,7 +31,7 @@ useEffect(() => {
 return (
 <>
 <h4 className=" ms-2 mb-4">Contenidos Multimedia</h4>
-<div className="row mb-4" style={{ paddingBottom: "50px", overflowX: "auto" }}>
+<div className="row mb-4" style={{ paddingBottom: "100px", overflowX: "auto" }}>
   <div className="d-flex gap-2" style={{ width: 'max-content' }}>
     {contenidos.map((contenido, index) => (
       <div className="ms-2" key={index} style={{ width: '100%', flexShrink: 0 }}>

@@ -9,6 +9,7 @@ export default function Registrar() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [sesion, setSesion] = useState(false)
+  const [editar, setEditar] = useState(false)
   const [username, setUsername] = useState("")       // ← Cambiado a 'username' para evitar confusiones
   const [nombreCompleto, setNombreCompleto] = useState("") // ← Vinculado al input real
   const [rol, setRol] = useState("cliente")          // ← Valor por defecto
@@ -45,6 +46,14 @@ export default function Registrar() {
   }
   getSession()
   },[])
+
+    async function handleCerrarSesion(){
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      router.refresh()
+      window.location.href = "/"
+    }
+    
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -145,17 +154,18 @@ export default function Registrar() {
             <div className="d-flex flex-column">
             <h4 className="fw-semibold">{sesion ? "Editar perfil" : "Crear cuenta"}</h4>
             <p className="text-muted small">{sesion ? "Edita tu información personal" : "Rellena los datos para registrarte"}</p>
+            {sesion && (
             <div className="d-flex gap-2">
             <button className="btn btn-outline-success" style={{ fontSize: '9px', padding: '2px 8px' }}>
               Editar perfil
             </button>
-            <button className="btn btn-outline-danger" style={{ fontSize: '9px', padding: '2px 8px' }}>
+            <button className="btn btn-outline-danger" onClick={handleCerrarSesion} style={{ fontSize: '9px', padding: '2px 8px' }}>
               Cerrar sesión
             </button>
             </div>
-          </div>
+            )}
 
-          {error && <div className="alert alert-danger py-2 small">{error}</div>}
+          </div>
 
           {/* Avatar */}
           <div className="mb-4 text-center">
@@ -253,6 +263,7 @@ export default function Registrar() {
           <button className="btn btn-primary w-100" onClick={handleRegister} disabled={loading || sesion}>
             {sesion ? "¡Registrado!" : loading ? "Registrando..." : "Registrarse"}
           </button>
+          {error && <div className="alert alert-danger text-center mt-2 py-2 small">{error}</div>}
         </div>
       </div>
     </div>
