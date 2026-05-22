@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Gym Carlos",
   description: "Generado por Carlos para su proyecto de gimnasio",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
