@@ -44,7 +44,7 @@ return(
     <section className="section_saludo col-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
     <div className="d-flex align-items-center text-center">
       <h2 className="saludo_personalizado m-0 ">
-        {pathname === "/" ? `Hola, ${nombre}👋`: pathname === "/Ejercicios" ? `Ejercitate, ${nombre}💪!` : ""}
+        {pathname === "/" ? `Hola, ${nombre}👋`: pathname === "/Ejercicios" ? `Ejercitate, ${nombre}💪!` : pathname === "/Multimedia" ? `Disfruta 📺, ${nombre}!` : pathname === "/Calendario" ? `Organizate, ${nombre}!` : ""}
         
         </h2>
     </div>

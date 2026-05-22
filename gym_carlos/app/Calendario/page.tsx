@@ -1,11 +1,12 @@
 import Navbar from "../componentes/navbar/navbar";
-
+import Perfil from "../componentes/perfil/perfil";
 const Calendario = () => {
     return(
 
-        <div>
+        <>
             <Navbar />
-        </div>
+            <Perfil />
+        </>
     )
 }
 export default Calendario;
