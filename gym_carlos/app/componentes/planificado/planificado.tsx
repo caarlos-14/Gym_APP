@@ -19,23 +19,24 @@ const Planificado = () => {
                     {loading ? (
                         <p className="text-muted">Cargando...</p>
                     ) : rutina && ejercicioActual ? (
-            <div className="d-flex flex-column gap-2">
-
-                <div className="p-3 rounded bg-light">
-                <div className="d-flex align-items-center gap-2 mb-1 position-relative">
-                    <i className="bi bi-chevron-left flecha fs-4" onClick={() => setIndiceEjercicio((prev) => (prev - 1 + rutina.ejercicios.length) % rutina.ejercicios.length)}></i>
-                    <span className="badge bg-primary">{indiceEjercicio + 1}/{rutina.ejercicios.length}</span>
-                    <span className="fw-medium">{ejercicioActual?.ejercicio} | <span className="badge bg-secondary">{ejercicioActual?.musculo}</span></span>
-                    
+            
+            <div className="d-flex tarjeta align-items-center rounded bg-light position-relative">
+                <div className="p-3">
+                        <div className="d-flex align-items-center gap-2 mb-1 ">
+                            <i className="bi bi-chevron-left flecha fs-4" onClick={() => setIndiceEjercicio((prev) => (prev - 1 + rutina.ejercicios.length) % rutina.ejercicios.length)}></i>
+                            <span className="badge bg-primary">{indiceEjercicio + 1}/{rutina.ejercicios.length}</span>
+                            <span className="fw-medium">{ejercicioActual?.ejercicio}</span>
+                            <span className="badge bg-secondary position-absolute top-0 start-0 m-2">{ejercicioActual?.musculo}</span>
+                        </div>
+                    </div> 
                 <div className="ms-auto d-flex gap-2">
                     <button className="btn btn-outline-primary btn-sm"><i className="bi bi-box-arrow-up-right"></i></button>
-                    <button className="btn btn-outline-danger btn-sm"><i className="bi bi-trash"></i> </button>
-                    <i className="bi bi-chevron-right flecha ms-5 fs-4" onClick={() => setIndiceEjercicio((prev) => (prev + 1) % rutina.ejercicios.length)}></i>
-                </div>
+                    <button className="btn btn-outline-danger btn-sm "><i className="bi bi-trash"></i> </button>
+                    <i className="bi bi-chevron-right flecha fs-4" onClick={() => setIndiceEjercicio((prev) => (prev + 1) % rutina.ejercicios.length)}></i>
                 </div>
 
-                </div>
             </div>
+            
                     ) : (
                         <p className="text-muted">No hay rutina para hoy.</p>
                     )}
@@ -45,3 +46,4 @@ const Planificado = () => {
     )
 }
 export default Planificado
+

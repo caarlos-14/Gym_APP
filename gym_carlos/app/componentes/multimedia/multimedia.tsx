@@ -30,16 +30,16 @@ useEffect(() => {
 
 return (
 <>
-<h4 className=" ms-2 mb-4">Contenidos Multimedia</h4>
+<h4 className="ms-2 mb-4">Contenidos Multimedia</h4>
 <div className="row mb-4" style={{ paddingBottom: "100px", overflowX: "auto" }}>
-  <div className="d-flex gap-2" style={{ width: 'max-content' }}>
+  <div className="d-flex" style={{ width: 'max-content' }}>
     {contenidos.map((contenido, index) => (
-      <div className="ms-2" key={index} style={{ width: '100%', flexShrink: 0 }}>
-        <h3 style={{ fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: 'center' }}>
+      <div className="ms-2" key={index} style={{ width: '220px', flexShrink: 0 }}>
+        <h3 style={{ fontSize: '12px', overflow: 'hidden'}}>
           {contenido.titulo}
         </h3>
         <a href={contenido.url} target="_blank" rel="noopener noreferrer">
-          <img style={{ width: '100%', height: '195px', objectFit: 'cover', borderRadius: '8px', display: 'block' }} src={getMultimedia(contenido.url)} alt={contenido.titulo} />
+          <img style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '8px', display: 'block' }} src={getMultimedia(contenido.url)} alt={contenido.titulo} />
         </a>
       </div>
     ))}
