@@ -3,9 +3,14 @@
   "name": "Gym Carlos",
   "icons": [
     {
-      "src": "/gym.png",
+      "src": "/gym_192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "/gym_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": "/",
