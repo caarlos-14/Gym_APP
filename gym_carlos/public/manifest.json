@@ -3,12 +3,12 @@
   "name": "Gym Carlos",
   "icons": [
     {
-      "src": "/gym-192.png",
+      "src": "/gym.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/gym-512.png",
+      "src": "/gym.png",
       "type": "image/png",
       "sizes": "512x512"
     }
