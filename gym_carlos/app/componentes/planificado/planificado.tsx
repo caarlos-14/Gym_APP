@@ -6,7 +6,7 @@ import { createClient } from "@/utils/supabase/client"
 import { useState,useEffect } from "react"
 
 const Planificado = () => {
-    const diaActual = 1
+    const diaActual = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1
     const { rutina, loading } = useRutinaDia(diaActual)
     const [indiceEjercicio, setIndiceEjercicio] = useState(0)
     const [ejercicios, setEjercicios] = useState<any[]>([])

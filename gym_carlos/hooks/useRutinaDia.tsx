@@ -1,17 +1,19 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import {createClient} from "@/utils/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 
 export type Ejercicio = {
     id: number;
     ejercicio: string;
-    series: number;
-    repeticiones: number;
-    peso: number;
-    rpe: number;
-    notas: string;
     musculo: string;
+    registros: {
+        id: number;
+        series: number;
+        repeticiones: number;
+        peso: number;
+        notas: string;
+    }[];
 }
 
 export type Rutina = {
@@ -25,32 +27,57 @@ export function useRutinaDia(dia_semana: number) {
     const [rutina, setRutina] = useState<Rutina | null>(null);
     const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-    const supabase = createClient();
+    useEffect(() => {
+        const supabase = createClient();
 
-    async function fetchRutina() {
-        // Comprueba el usuario activo
-        const { data: { user } } = await supabase.auth.getUser()
-        console.log("usuario:", user)
+async function fetchRutina() {
+    setLoading(true);
 
-        setLoading(true);
-        const {data, error} = await supabase
-            .from("rutinas")
-            .select("id, nombre, dia_semana, ejercicios (id, ejercicio, series, repeticiones, peso, rpe, notas, musculo)")
-            .eq("dia_semana", dia_semana)
-            .maybeSingle();
+    const { data: { user } } = await supabase.auth.getUser()
+console.log("user:", user?.id)
+    const { data: rutinaData, error } = await supabase
+        .from("rutinas")
+        .select(`
+    id, nombre, dia_semana,
+    rutina_ejercicios (
+        ejercicio_id,
+        ejercicios!rutina_ejercicios_ejercicio_id_fkey (id, ejercicio, musculo)
+    )
+`)
+        .eq("dia_semana", dia_semana)
+        .eq("user_id", user?.id)        // ✅ filtro por usuario
+        .maybeSingle();
 
-        console.log("data:", data)
-        console.log("error:", error)
+    console.log("rutina:", rutinaData, "error:", error)
 
-        if (data) {
-            setRutina(data);
-        } else {
-            setRutina(null);
-        }
+    if (!rutinaData) {
+        setRutina(null);
         setLoading(false);
+        return;
     }
-    fetchRutina();
-}, [dia_semana]);
-    return {rutina,loading}
+
+    // Aplanar la estructura rutina_ejercicios → ejercicios
+    const ejercicios = rutinaData.rutina_ejercicios.map((re: any) => re.ejercicios)
+    const ejercicioIds = ejercicios.map((e: any) => e.id)
+
+    const { data: registros } = await supabase
+        .from("Registro")
+        .select("id, ejercicio_id, series, repeticiones, peso, notas")
+        .in("ejercicio_id", ejercicioIds)
+        .eq("uuid", user?.id)
+        .order("created_at", { ascending: true })
+
+    const ejerciciosConRegistros: Ejercicio[] = ejercicios.map((ej: any) => ({
+        ...ej,
+        registros: registros?.filter(r => r.ejercicio_id === ej.id) ?? []
+    }))
+
+    setRutina({ ...rutinaData, ejercicios: ejerciciosConRegistros });
+    setLoading(false);
+}
+
+        fetchRutina();
+    }, [dia_semana]);
+
+    return { rutina, loading }
 }

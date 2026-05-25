@@ -18,7 +18,7 @@ useEffect(() => {
 
 
     return (
-        <div className="container mt-4">
+        <div className="container mt-4 " style={{ paddingBottom: "300px" }}>
             <h2>Ejercicios</h2>
             <p>Aquí puedes ver y gestionar tus ejercicios, Ademas de poder agregarlos a tu planificación semanal.</p>
                 <div className="d-flex gap-2 mb-3">

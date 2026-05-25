@@ -37,6 +37,8 @@ body{
 .tarjeta{
   height: 120px;
 }
+
+
 /* ESTILOS PERFIL.TSX */
 @media (max-width: 768px) {
 .btn-perfil{
