@@ -25,40 +25,49 @@ async function agregarEjercicio(ejercicio: any) {
         return;
     }
 
-    // CAMBIO 1: Buscamos por "nombre" en lugar de "musculo"
-    // Asegúrate de que el nombre que buscas (ejercicio.musculo o el que prefieras) 
-    // exista en la columna 'nombre' de tu tabla 'rutinas'
-    const { data: rutina, error: errorRutina } = await supabase
+    // 1. Obtener todas las rutinas del usuario
+    const { data: rutinas, error: errorRutinas } = await supabase
         .from("rutinas")
-        .select("id")
-        .eq("user_id", user.id)
-        .ilike("nombre", ejercicio.musculo) // <--- AQUÍ CAMBIA 'musculo' POR 'nombre'
-        .single();
+        .select("id, nombre")
+        .eq("user_id", user.id);
 
-    if (errorRutina || !rutina) {
-        // CAMBIO 2: Ajusta el mensaje para que sea coherente
-        alert(`No tienes una rutina con el nombre: ${ejercicio.musculo}`);
+    if (errorRutinas || !rutinas || rutinas.length === 0) {
+        alert("No tienes rutinas creadas.");
         return;
     }
 
-    // El resto de la función se mantiene igual
-    const { count } = await supabase
-        .from("rutina_ejercicios")
-        .select("*", { count: "exact", head: true })
-        .eq("rutina_id", rutina.id);
+    // 2. Lógica flexible: Buscar una rutina que contenga parte del nombre del músculo
+    // Esto funciona para "pecho", "Pecho", "pecho y triceps", etc.
+    const rutinaEncontrada = rutinas.find(r => 
+        r.nombre.toLowerCase().includes(ejercicio.musculo.toLowerCase())
+    );
 
-    const { error } = await supabase
+    if (!rutinaEncontrada) {
+        alert(`No encontramos una rutina para el músculo: ${ejercicio.musculo}. Tienes rutinas llamadas: ${rutinas.map(r => r.nombre).join(", ")}`);
+        return;
+    }
+
+    // 3. Conteo seguro (sin errores 406)
+    const { count, error: errorCount } = await supabase
+        .from("rutina_ejercicios")
+        .select("id", { count: "exact" })
+        .eq("rutina_id", rutinaEncontrada.id);
+
+    const nuevoOrden = (count || 0) + 1;
+
+    // 4. Insertar
+    const { error: errorInsert } = await supabase
         .from("rutina_ejercicios")
         .insert({
-            rutina_id: rutina.id, 
+            rutina_id: rutinaEncontrada.id, 
             ejercicio_id: ejercicio.id,
-            orden: (count || 0) + 1
+            orden: nuevoOrden
         });
 
-    if (error) {
-        alert("Error al guardar: " + error.message);
+    if (errorInsert) {
+        alert("Error al guardar: " + errorInsert.message);
     } else {
-        alert(`¡Ejercicio "${ejercicio.ejercicio}" agregado a la rutina: ${ejercicio.musculo}!`);
+        alert(`¡"${ejercicio.ejercicio}" agregado a "${rutinaEncontrada.nombre}"!`);
     }
 }
 

@@ -17,11 +17,43 @@ const Planificado = () => {
         }
     }, [rutina])
 
-    const borrarEjercicio = async () => {
-    if (indiceEjercicio >= ejercicios.length - 1)
-        setIndiceEjercicio(Math.max(0, ejercicios.length - 2))
-    setEjercicios(prev => prev.filter((_, i) => i !== indiceEjercicio))
+const borrarEjercicio = async () => {
+    // ESTA LÍNEA ES LA CLAVE
+    console.log("Índice actual:", indiceEjercicio);
+    console.log("Objeto del ejercicio en ese índice:", ejercicios[indiceEjercicio]);
+
+    const idRelacion = ejercicios[indiceEjercicio]?.id_relacion; 
+
+    if (!idRelacion) {
+        alert("Error: id_relacion no encontrado. Mira la consola (F12).");
+        return;
     }
+
+    const supabase = createClient();
+    
+    // 2. Borrado directo en la tabla puente
+    const { error } = await supabase
+        .from("rutina_ejercicios")
+        .delete()
+        .eq("id", idRelacion);
+
+    if (error) {
+        console.error("Error de Supabase:", error);
+        alert("Error al borrar: " + error.message);
+    } else {
+        // 3. Eliminación exitosa: actualizamos el estado local
+        setEjercicios(prev => {
+            const nuevosEjercicios = prev.filter((_, i) => i !== indiceEjercicio);
+            
+            // Ajuste seguro de índice para que no se quede en el vacío
+            if (indiceEjercicio >= nuevosEjercicios.length) {
+                setIndiceEjercicio(Math.max(0, nuevosEjercicios.length - 1));
+            }
+            
+            return nuevosEjercicios;
+        });
+    }
+};
 
     return (
         <div className="container-fluid" style={{ paddingBottom: "20px" }} >

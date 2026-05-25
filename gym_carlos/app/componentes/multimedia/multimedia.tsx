@@ -42,8 +42,6 @@ return (
         <a href={contenido.url} target="_blank" rel="noopener noreferrer">
           <img style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '8px', display: 'block' }} src={getMultimedia(contenido.url)} alt={contenido.titulo} />
         </a>
-        <button className="btn btn-success position-absolute top-0 start-0"><i className="bi bi-check-circle-fill"></i></button>
-        <button className="btn btn-danger position-absolute top-0 end-0"><i className="bi bi-x-circle-fill"></i></button>
         </div>
 
     </div>
