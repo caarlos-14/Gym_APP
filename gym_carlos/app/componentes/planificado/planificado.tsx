@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import "./planificado.css"
 import { useRutinaDia } from "@/hooks/useRutinaDia"
 import { createClient } from "@/utils/supabase/client"
@@ -78,6 +79,9 @@ const borrarEjercicio = async () => {
                     <button className="btn btn-outline-danger btn-sm " onClick={borrarEjercicio}>
                         <i className="bi bi-trash"></i>
                     </button>
+                    <Link href="Ejercicios#registrar_ejercicio" className="d-flex align-items-center btn btn-outline-success btn-sm ">
+                        <i className="bi bi-save"></i>
+                    </Link>
                     <i className="bi bi-chevron-right flecha fs-4" onClick={() => setIndiceEjercicio((prev) => (prev + 1) % ejercicios.length)}></i>
                 </div>
 

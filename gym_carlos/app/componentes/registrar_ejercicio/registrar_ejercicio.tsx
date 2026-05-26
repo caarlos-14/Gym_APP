@@ -46,12 +46,12 @@ const guardar = async () => {
 }
     return(
         <>
-        <div className="container-fluid card">
+        <div className="container-fluid card" id="registrar_ejercicio">
             <div className="card-title mt-4">
                 <h5 className="text-center">Registro Ejercicio</h5>
                 <div className="card-body">
                         <div className="mt-1 mb-4">
-                            <span>Ejercicio a registrar: <strong>{ejercicioActual?.ejercicio || "Cargando..."}</strong></span>
+                            <span>Ejercicio a registrar: <strong>{ejercicioActual?.ejercicio || "Seleccione sus ejercicios, para registrarlos en su entrenamiento"}</strong></span>
                         </div>
                     {seriesAgregadas.map((serie, index) => (
     <div key={index} className="row mb-2">
