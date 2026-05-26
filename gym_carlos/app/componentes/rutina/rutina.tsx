@@ -92,7 +92,7 @@ const Rutina = () => {
                                     setModalAbierto(true)
                                     setNombreRutina(rutinaExistente?.nombre || "")
                                 }} 
-                                className="bg-dark rounded p-3 d-flex justify-content-between align-items-center" 
+                                className="bg-dark rounded col p-3 d-flex justify-content-between align-items-center" 
                                 style={{ cursor: "pointer" }}
                             >
                                 <h6 className="card-subtitle text-white">{dia}</h6>

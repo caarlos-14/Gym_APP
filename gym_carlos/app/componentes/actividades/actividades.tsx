@@ -60,12 +60,15 @@ export default function RutinaSemanal() {
                     <span className="badge bg-primary">{i + 1}</span>
                     <span className="fw-medium">{ej.ejercicio}</span>
                   </div>
-                  <div className="d-flex gap-3 small text-muted">
-                    <span>{ej.series} series</span>
-                    <span>{ej.repeticiones} reps</span>
-                    {ej.peso && <span>{ej.peso} kg</span>}
-                    {ej.rpe && <span>RPE {ej.rpe}</span>}
-                  </div>
+{ej.registros && ej.registros.length > 0 ? (
+    ej.registros.map((reg: any) => (
+        <div key={reg.id} className="small text-muted">
+            Set {reg.series}: {reg.peso}kg x {reg.repeticiones} reps
+        </div>
+    ))
+) : (
+    <span className="small text-muted">Sin registros</span>
+)}
                   {ej.notas && (
                     <p className="small text-muted mt-1 mb-0">📝 {ej.notas}</p>
                   )}
