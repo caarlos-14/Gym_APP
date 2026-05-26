@@ -91,7 +91,7 @@ async function agregarEjercicio(ejercicio: any) {
                         <option value="antebrazo">Antebrazo</option>
                     </select>
                  </div>
-            <div className="row">
+            <div className="row" style={{paddingBottom:"80px"}}>
                 {filtro !== "" && ejercicios.length === 0 && <p className="text-muted text-center mt-3">No se encontraron ejercicios para esta zona muscular.</p>}
                 {filtro && ejercicios.map((ejercicio,index) =>(
                     <div key={index}>
