@@ -22,16 +22,16 @@ export default function StravaActivities() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetch('/api/strava')
-      .then(r => r.json())
-      .then(data => {
-        if (Array.isArray(data)) setActivities(data);
-        else setError(JSON.stringify(data));
-        setLoading(false);
-      })
-      .catch(err => { setError(err.message); setLoading(false); });
-  }, []);
+useEffect(() => {
+  fetch('/api/strava/activities')  // ← esto es clave
+    .then(r => r.json())
+    .then(data => {
+      console.log('Datos recibidos:', data);
+      if (Array.isArray(data)) setActivities(data);
+      else setError(JSON.stringify(data));
+      setLoading(false);
+    });
+}, []);
 
   const toKm = (m: number) => (m / 1000).toFixed(1);
   const toPace = (seconds: number, meters: number) => {
