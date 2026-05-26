@@ -6,6 +6,15 @@ import {usePathname} from "next/navigation"
 import "@/app/componentes/navbar/navbar.css"
 const navbar = () =>{
     const pathname = usePathname()
+    const handleConnect = () => {
+    const params = new URLSearchParams({
+      client_id: process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID!,
+      redirect_uri: `${window.location.origin}/api/strava/callback`,
+      response_type: 'code',
+      scope: 'activity:read_all',
+    });
+    window.location.href = `https://www.strava.com/oauth/authorize?${params}`;
+  };
     return(
         <nav>
             <div className="container-fluid">

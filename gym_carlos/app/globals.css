@@ -38,6 +38,12 @@ body{
   height: 120px;
 }
 
+.btn_strava{
+  position:fixed;
+  bottom:85;
+  right:1em;
+}
+
 /* ESTILOS PERFIL.TSX */
 @media (max-width: 768px) {
 .btn-perfil{

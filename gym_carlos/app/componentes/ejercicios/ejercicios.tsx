@@ -72,7 +72,7 @@ async function agregarEjercicio(ejercicio: any) {
 }
 
     return (
-        <div className="container mt-4 " style={{ paddingBottom: "300px" }}>
+        <div className="container mt-4 ">
             <h2>Ejercicios</h2>
             <p>Aquí puedes ver y gestionar tus ejercicios, Ademas de poder agregarlos a tu planificación semanal.</p>
                 <div className="d-flex gap-2 mb-3">
