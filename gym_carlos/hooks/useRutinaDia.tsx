@@ -8,6 +8,7 @@ export type Ejercicio = {
     id_relacion: number; // Ahora incluimos este ID para el borrado
     ejercicio: string;
     musculo: string;
+    imagen:string
     registros: {
         id: number;
         series: number;
@@ -43,7 +44,7 @@ export function useRutinaDia(dia_semana: number) {
                     rutina_ejercicios (
                         id,
                         ejercicio_id,
-                        ejercicios!rutina_ejercicios_ejercicio_id_fkey (id, ejercicio, musculo)
+                        ejercicios!rutina_ejercicios_ejercicio_id_fkey (id, ejercicio, musculo,imagen)
                     )
                 `)
                 .eq("dia_semana", dia_semana)
