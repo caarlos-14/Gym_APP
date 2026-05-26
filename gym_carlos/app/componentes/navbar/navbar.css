@@ -21,6 +21,10 @@ justify-content: space-between;
 transform: scale(1.2);
 }
 
+.texto{
+  font-size:0.6em;
+}
+
 @media (max-width: 768px) {
 .icono-gym{
   width: 30px !important;

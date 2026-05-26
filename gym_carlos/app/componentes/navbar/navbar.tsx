@@ -11,7 +11,7 @@ const navbar = () =>{
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 navegacion">
-                        <Link href="/" className="text-decoration-none text-dark">
+                        <Link href="/" className="text-decoration-none text-dark texto">
                         <div className="d-flex flex-column justify-content-center align-items-center">
                             <Image
                             src="/casa.png"
@@ -24,7 +24,7 @@ const navbar = () =>{
                             <label htmlFor="Inicio">Inicio</label>
                         </div>
                         </Link>
-                        <Link href="/Ejercicios" className="text-decoration-none text-dark">
+                        <Link href="/Ejercicios" className="text-decoration-none text-dark texto">
                         <div className="d-flex flex-column justify-content-center align-items-center">
                             <Image
                             src="/mancuerna.png"
@@ -37,7 +37,7 @@ const navbar = () =>{
                             <label htmlFor="ejercicio">Ejercicio</label>
                         </div>
                         </Link>
-                        <Link href="/Multimedia" className="text-decoration-none text-dark">
+                        <Link href="/Multimedia" className="text-decoration-none text-dark texto">
                         <div className="d-flex flex-column justify-content-center align-items-center">
                             <Image
                             src="/multimedia.png"
@@ -50,7 +50,7 @@ const navbar = () =>{
                             <label htmlFor="multimedia">Multimedia</label>
                         </div>
                         </Link>
-                        <Link href="/Calendario" className="text-decoration-none text-dark"> 
+                        <Link href="/Calendario" className="text-decoration-none text-dark texto"> 
                         <div className="d-flex flex-column justify-content-center align-items-center">
                             <Image
                             src="/calendario.png"
@@ -63,7 +63,7 @@ const navbar = () =>{
                             <label htmlFor="calendario">Calendario</label>
                         </div>
                         </Link>
-                        <Link href="/Registrar" className="text-decoration-none text-dark">
+                        <Link href="/Registrar" className="text-decoration-none text-dark texto">
                         <div className="d-flex flex-column justify-content-center align-items-center">
                             <Image
                             src="/usuario.png"
