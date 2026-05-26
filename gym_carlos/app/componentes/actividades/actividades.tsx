@@ -39,7 +39,7 @@ export default function RutinaSemanal() {
           </div>
         {!loading && rutina && (
           <div className="d-flex flex-column">
-          <h6 className=" badge bg-primary text-white color text-end">Rutina del {DIAS_NOMBRE[diaActivo]}</h6>
+          <h6 className=" badge bg-primary text-white color text-center">Rutina del {DIAS_NOMBRE[diaActivo]}</h6>
           <p className="text-muted text-end color small">{rutina.nombre}</p>
           </div>
         )}
