@@ -70,9 +70,9 @@ const borrarEjercicio = async () => {
                     <div className="">
                             <span className="badge bg-primary position-absolute top-0 end-0 m-2">{indiceEjercicio + 1}/{ejercicios.length}</span>
                     </div>
-                    <div className="d-flex justify-content-between align-items-center w-100">
+                    <div className="d-flex justify-content-around align-items-center w-100">
                         <i className="bi bi-chevron-left flecha fs-4" onClick={() => setIndiceEjercicio((prev) => (prev - 1 + ejercicios.length) % ejercicios.length)}></i>
-                        <div className="d-flex align-items-center gap-5 ">
+                        <div className="d-flex align-items-center ">
                             <img
                             src={ejercicioActual.imagen}
                             alt={ejercicioActual.ejercicio}

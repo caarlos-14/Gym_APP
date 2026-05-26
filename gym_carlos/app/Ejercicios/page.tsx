@@ -12,7 +12,7 @@ export default function Ejercicios() {
       <Perfil />
       <RutinaComponent />
       <Registrar_Ejercicio />
-      <StravaActivities></StravaActivities>
+      {/*<StravaActivities></StravaActivities>*/}
       <EjerciciosComponent />
       <ConnectStrava />
       {/* El Navbar va al final para que el botón se renderice sobre los demás elementos */}

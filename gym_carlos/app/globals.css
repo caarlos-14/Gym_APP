@@ -23,7 +23,7 @@ body{
 }
 .actividad{
   background-color: #EBFFA9 !important;
-  max-height: 220px;
+  max-height: 36vh;
   overflow-y: auto;
   box-shadow: 0 0px 5px rgba(30, 30, 30, 0.6);
 }
@@ -38,6 +38,9 @@ body{
   height: 200px;
 }
 
+.card_registro{
+  height: 200px;
+}
 .btn_strava{
   position:fixed;
   bottom:85;

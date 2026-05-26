@@ -1,6 +1,6 @@
 // components/RutinaSemanal.tsx
 'use client'
-
+import Link from "next/link"
 import { useState } from 'react'
 import { useRutinaDia } from '@/hooks/useRutinaDia'
 
@@ -55,16 +55,27 @@ export default function RutinaSemanal() {
           <>
             <div className="d-flex flex-column gap-2">
               {rutina.ejercicios.map((ej: any, i:any) => (
-                <div key={ej.id} className="p-3 rounded bg-light">
+                <div key={ej.id} className="p-3 rounded bg-light card_registro" style={{overflowY:"auto"}}>
                   <div className="d-flex align-items-center gap-2 mb-1">
                     <span className="badge bg-primary">{i + 1}</span>
                     <span className="fw-medium">{ej.ejercicio}</span>
                   </div>
-{ej.registros && ej.registros.length > 0 ? (
-    ej.registros.map((reg: any) => (
-        <div key={reg.id} className="small text-muted">
-            Set {reg.series}: {reg.peso}kg x {reg.repeticiones} reps
-        </div>
+                
+                {ej.registros && ej.registros.length > 0 ? (
+                ej.registros.map((reg: any) => (
+                  <div key={reg.id} className="small text-muted">
+                  <div className="d-flex justify-content-around mb-2 align-items-center border-bottom mb-2">
+                  Serie {reg.series}: {reg.peso}kg x {reg.repeticiones} reps
+                <div className="d-flex gap-2 mb-2 ">
+                    <button className="btn btn-outline-danger btn-sm  " >
+                        <i className="bi bi-trash"></i>
+                    </button>
+                    <Link href="Ejercicios#registrar_ejercicio" className="d-flex align-items-center btn btn-outline-success btn-sm ">
+                        <i className="bi bi-save"></i>
+                    </Link>
+                    </div>
+                  </div>
+                </div>
     ))
 ) : (
     <span className="small text-muted">Sin registros</span>
