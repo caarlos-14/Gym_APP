@@ -147,7 +147,7 @@ export default function Registrar() {
   }
 
   return (
-    <div className="d-flex align-items-center justify-content-center">
+    <div className="d-flex align-items-center justify-content-center" style={{paddingBottom:"80px"}}>
       <div className="card shadow-sm w-100">
         <div className="card-body p-4">
           <div className="d-flex justify-content-between align-items-center">
