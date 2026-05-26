@@ -76,7 +76,7 @@ const borrarEjercicio = async () => {
                             <img
                             src={ejercicioActual.imagen}
                             alt={ejercicioActual.ejercicio}
-                            style={{ width: 200, height: 150, objectFit: 'contain' }}
+                            style={{ width: 200, height: 100, objectFit: 'contain' }}
                             />
                             <span className="fw-medium">{ejercicioActual?.ejercicio}</span>
                     </div>
