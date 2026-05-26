@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.redirect(new URL('/login', req.url));
+  if (!user) return NextResponse.redirect(new URL('/', req.url));
 
   // 3. Guardar tokens en Supabase
   await supabase.from('strava_tokens').upsert({
@@ -45,5 +45,5 @@ export async function GET(req: NextRequest) {
     athlete_id: athlete.id,
   });
 
-  return NextResponse.redirect(new URL('/dashboard', req.url));
+  return NextResponse.redirect(new URL('/', req.url));
 }
