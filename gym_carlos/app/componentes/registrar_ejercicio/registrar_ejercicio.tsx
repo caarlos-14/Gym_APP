@@ -180,7 +180,7 @@ const Registro_Ejercicio = () => {
             </div>
 
             {/* Botones */}
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div style={{ display: "flex", gap: "8px" }} id="registrar_ejercicio">
                 <button
                     type="button"
                     className="btn btn-outline-secondary btn-sm"
