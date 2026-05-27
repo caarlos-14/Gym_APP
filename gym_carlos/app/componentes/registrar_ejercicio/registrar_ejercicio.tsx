@@ -15,6 +15,7 @@ const Registro_Ejercicio = () => {
     const [seriesAgregadas, setSeriesAgregadas] = useState<any[]>([])
     const [confirmando, setConfirmando] = useState(false)
     const [ejercicioAGuardar, setEjercicioAGuardar] = useState<any>(null)
+    const [nota, setNota] = useState("");
 
     useEffect(() => {
         if (rutina) setEjercicios(rutina.ejercicios)
@@ -85,7 +86,7 @@ const Registro_Ejercicio = () => {
             </div>
 
             {/* Ejercicio actual + navegación */}
-            <div style={{
+            <div id="registrar_ejercicio" style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
                 background: "var(--bs-secondary-bg)",
                 borderRadius: "8px",
@@ -177,10 +178,22 @@ const Registro_Ejercicio = () => {
                         onChange={e => setRepeticiones(e.target.value)}
                     />
                 </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "5px", marginBottom: "1rem" }}>
+                    <label style={{ fontSize: "12px", color: "var(--bs-secondary-color)" }}>
+                    Notas adicionales (opcional)
+                    </label>
+                    <textarea
+                    className="form-control form-control-sm"
+                    placeholder="Ej: Sentí molestias en la muñeca..."
+                    value={nota}
+                    onChange={e => setNota(e.target.value)}
+                    rows={2}
+                    />
+                </div>
             </div>
 
             {/* Botones */}
-            <div style={{ display: "flex", gap: "8px" }} id="registrar_ejercicio">
+            <div style={{ display: "flex", gap: "8px" }}>
                 <button
                     type="button"
                     className="btn btn-outline-secondary btn-sm"

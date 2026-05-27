@@ -2,10 +2,11 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRutinaDia } from '@/hooks/useRutinaDia'
+import { createClient } from "@/utils/supabase/client";
 
 const DIAS = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
 const DIAS_NOMBRE = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-
+const supabase = createClient();
 function getTodayIndex() {
   const d = new Date().getDay()
   return d === 0 ? 6 : d - 1
@@ -14,6 +15,14 @@ function getTodayIndex() {
 export default function RutinaSemanal() {
   const [diaActivo, setDiaActivo] = useState(getTodayIndex())
   const { rutina, loading } = useRutinaDia(diaActivo)
+
+  // Función para eliminar
+const eliminarSerie = async (id: string) => {
+  if (!confirm("¿Seguro que quieres borrar esta serie?")) return;
+  const { error } = await supabase.from("Registro").delete().eq("id", id);
+  if (!error) window.location.reload(); // Recargamos para ver cambios
+};
+
 
   return (
     <div className="card shadow-sm border-0 rounded-4">
@@ -82,33 +91,36 @@ export default function RutinaSemanal() {
                   <span className="fw-semibold small">{ej.ejercicio}</span>
                 </div>
 
-                {/* Series */}
-                {ej.registros && ej.registros.length > 0 ? (
-                  <div className="d-flex flex-column gap-1">
-                    {ej.registros.map((reg: any) => (
-                      <div key={reg.id} className="d-flex align-items-center justify-content-between border-top pt-2">
-                        <div className="d-flex align-items-center gap-2">
-                          <span className="badge bg-secondary bg-opacity-25 text-secondary small">
-                            Serie {reg.series}
-                          </span>
-                          <small className="text-muted">
-                            {reg.peso > 0 ? `${reg.peso} kg` : 'Peso corporal'} × {reg.repeticiones} reps
-                          </small>
-                        </div>
-                        <div className="d-flex gap-1">
-                          <button className="btn btn-outline-danger btn-sm py-0 px-2" aria-label={`Eliminar serie ${reg.series}`}>
-                            <i className="bi bi-trash" aria-hidden="true" />
-                          </button>
-                          <Link href="Ejercicios#registrar_ejercicio" className="btn btn-outline-success btn-sm py-0 px-2" aria-label={`Guardar serie ${reg.series}`}>
-                            <i className="bi bi-floppy" aria-hidden="true" />
-                          </Link>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <small className="text-muted fst-italic">Sin registros aún</small>
-                )}
+{/* Series */}
+{ej.registros && ej.registros.length > 0 ? (
+  <div className="d-flex flex-column gap-1">
+    {ej.registros.map((reg: any) => (
+      <div key={reg.id} className="d-flex align-items-center justify-content-between border-top pt-2">
+        <div className="d-flex align-items-center gap-2">
+          <span className="badge bg-secondary bg-opacity-25 text-secondary small">
+            Serie {reg.series}
+          </span>
+          <small className="text-muted">
+            {reg.peso > 0 ? `${reg.peso} kg` : 'Peso corporal'} × {reg.repeticiones} reps
+          </small>
+        </div>
+        
+        {/* BOTONES CORREGIDOS AQUÍ */}
+        <div className="d-flex gap-1">
+          <button 
+            onClick={() => eliminarSerie(reg.id)}
+            className="btn btn-outline-danger btn-sm py-0 px-2" 
+            aria-label={`Eliminar serie ${reg.series}`}
+          >
+            <i className="bi bi-trash" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <small className="text-muted fst-italic">Sin registros aún</small>
+)}
 
                 {/* Notas */}
                 {ej.notas && (
