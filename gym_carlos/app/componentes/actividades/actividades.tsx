@@ -91,30 +91,41 @@ const eliminarSerie = async (id: string) => {
                   <span className="fw-semibold small">{ej.ejercicio}</span>
                 </div>
 
-{/* Series */}
+{/* Series y sus respectivas notas */}
 {ej.registros && ej.registros.length > 0 ? (
   <div className="d-flex flex-column gap-1">
     {ej.registros.map((reg: any) => (
-      <div key={reg.id} className="d-flex align-items-center justify-content-between border-top pt-2">
-        <div className="d-flex align-items-center gap-2">
-          <span className="badge bg-secondary bg-opacity-25 text-secondary small">
-            Serie {reg.series}
-          </span>
-          <small className="text-muted">
-            {reg.peso > 0 ? `${reg.peso} kg` : 'Peso corporal'} × {reg.repeticiones} reps
-          </small>
+      <div key={reg.id} className="border-top pt-2">
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-2">
+            <span className="badge bg-secondary bg-opacity-25 text-secondary small">
+              Serie {reg.series}
+            </span>
+            <small className="text-muted">
+              {reg.peso > 0 ? `${reg.peso} kg` : 'Peso corporal'} × {reg.repeticiones} reps
+            </small>
+          </div>
+          
+          <div className="d-flex gap-1">
+            <button 
+              onClick={() => eliminarSerie(reg.id)}
+              className="btn btn-outline-danger btn-sm py-0 px-2" 
+              aria-label={`Eliminar serie ${reg.series}`}
+            >
+              <i className="bi bi-trash" aria-hidden="true" />
+            </button>
+          </div>
         </div>
-        
-        {/* BOTONES CORREGIDOS AQUÍ */}
-        <div className="d-flex gap-1">
-          <button 
-            onClick={() => eliminarSerie(reg.id)}
-            className="btn btn-outline-danger btn-sm py-0 px-2" 
-            aria-label={`Eliminar serie ${reg.series}`}
-          >
-            <i className="bi bi-trash" aria-hidden="true" />
-          </button>
-        </div>
+
+        {/* AQUÍ SE MUESTRA LA NOTA DE CADA SERIE */}
+{reg.notas && (
+  <div className="d-flex align-items-start gap-2 mt-1 ms-3">
+    <i className="bi bi-chat-left-text small text-secondary" aria-hidden="true" style={{ fontSize: '10px' }} />
+    <small className="text-secondary" style={{ fontSize: '11px', fontStyle: 'italic' }}>
+      {reg.notas}
+    </small>
+  </div>
+)}
       </div>
     ))}
   </div>

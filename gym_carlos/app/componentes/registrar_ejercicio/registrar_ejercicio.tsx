@@ -21,34 +21,56 @@ const Registro_Ejercicio = () => {
         if (rutina) setEjercicios(rutina.ejercicios)
     }, [rutina])
 
-    const agregarSerie = () => {
-        if (!peso || !repeticiones) return
-        setSeriesAgregadas(prev => [...prev, { peso, repeticiones }])
-        setPeso("")
-        setRepeticiones("")
+const agregarSerie = () => {
+    if (!peso || !repeticiones) return;
+    
+    // Guardamos el conjunto actual en el array
+    setSeriesAgregadas(prev => [...prev, { 
+        peso, 
+        repeticiones, 
+        notas: nota // <--- Guardamos la nota aquí
+    }]);
+    
+    // Limpiamos los inputs
+    setPeso("");
+    setRepeticiones("");
+    setNota(""); // <--- Limpiamos la nota también
+};
+
+const guardar = async () => {
+    if (seriesAgregadas.length === 0) return;
+    if (!ejercicioAGuardar) return;
+
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        alert("Debes estar logueado para guardar.");
+        return;
     }
 
-    const guardar = async () => {
-        if (seriesAgregadas.length === 0) return
-        if (!ejercicioAGuardar) return
+    // Preparamos los datos para insertar
+    const registros = seriesAgregadas.map((serie, i) => ({
+        ejercicio_id: ejercicioAGuardar.id,
+        uuid: user.id,
+        series: i + 1,
+        peso: parseFloat(serie.peso) || 0, // Aseguramos formato numérico
+        repeticiones: parseInt(serie.repeticiones) || 0,
+        notas: serie.nota
+    }));
 
-        const supabase = createClient()
-        const { data: { user } } = await supabase.auth.getUser()
+    // Insertamos todos a la vez
+    const { error } = await supabase.from("Registro").insert(registros);
 
-        for (let i = 0; i < seriesAgregadas.length; i++) {
-            await supabase.from("Registro").insert({
-                ejercicio_id: ejercicioAGuardar.id,
-                uuid: user?.id,
-                series: i + 1,
-                peso: seriesAgregadas[i].peso,
-                repeticiones: seriesAgregadas[i].repeticiones
-            })
-        }
-
-        setSeriesAgregadas([])
-        setEjercicioAGuardar(null)
-        window.location.reload()
+    if (error) {
+        console.error("Error al insertar:", error);
+        alert("Hubo un error al guardar: " + error.message);
+    } else {
+        setSeriesAgregadas([]);
+        setEjercicioAGuardar(null);
+        window.location.reload();
     }
+};
 
     const handleGuardarClick = () => {
         if (seriesAgregadas.length === 0) return
@@ -124,33 +146,20 @@ const Registro_Ejercicio = () => {
                 </div>
             </div>
 
-            {/* Lista de series guardadas */}
-            {seriesAgregadas.length > 0 && (
-                <div style={{ marginBottom: "1rem" }}>
-                    {seriesAgregadas.map((serie, index) => (
-                        <div key={index} style={{
-                            display: "flex", alignItems: "center", gap: "8px",
-                            padding: "6px 0",
-                            borderBottom: "1px solid var(--bs-border-color)",
-                            fontSize: "13px"
-                        }}>
-                            <div style={{
-                                width: "22px", height: "22px", borderRadius: "50%",
-                                background: "var(--bs-secondary-bg)",
-                                border: "1px solid var(--bs-border-color)",
-                                display: "flex", alignItems: "center", justifyContent: "center",
-                                fontSize: "11px", fontWeight: 500,
-                                color: "var(--bs-secondary-color)", flexShrink: 0
-                            }}>
-                                {index + 1}
-                            </div>
-                            <span>{serie.peso} <span style={{ fontSize: "11px", color: "var(--bs-secondary-color)" }}>kg</span></span>
-                            <span style={{ color: "var(--bs-border-color)" }}>·</span>
-                            <span>{serie.repeticiones} <span style={{ fontSize: "11px", color: "var(--bs-secondary-color)" }}>reps</span></span>
-                        </div>
-                    ))}
-                </div>
-            )}
+            {/* Dentro de tu mapeo de seriesAgregadas */}
+{seriesAgregadas.map((serie, index) => (
+    <div key={index} style={{ marginBottom: "8px" }}>
+        <div style={{ display: "flex", gap: "8px", fontSize: "13px" }}>
+            <span>{serie.peso}kg × {serie.repeticiones} reps</span>
+        </div>
+        {/* Mostramos la nota si existe */}
+        {serie.notas && (
+            <p style={{ fontSize: "11px", color: "var(--bs-secondary-color)", margin: "2px 0 0 0" }}>
+                <i>Nota: {serie.notas}</i>
+            </p>
+        )}
+    </div>
+))}
 
             {/* Inputs nueva serie */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "1rem" }}>
@@ -178,17 +187,20 @@ const Registro_Ejercicio = () => {
                         onChange={e => setRepeticiones(e.target.value)}
                     />
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "5px", marginBottom: "1rem" }}>
+                
+                <div className="col-12" style={{ display: "flex", flexDirection: "column", gap: "5px", marginBottom: "1rem" }}>
                     <label style={{ fontSize: "12px", color: "var(--bs-secondary-color)" }}>
-                    Notas adicionales (opcional)
+                    Notas adicionales
                     </label>
                     <textarea
-                    className="form-control form-control-sm"
+                    className="form-control form-control-sm col-12"
                     placeholder="Ej: Sentí molestias en la muñeca..."
                     value={nota}
                     onChange={e => setNota(e.target.value)}
-                    rows={2}
+                    rows={4}
+                    style={{width:"100%"}}
                     />
+
                 </div>
             </div>
 
